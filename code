@@ -1,22 +1,25 @@
-import pygame 
+import pygame
 import time
-import random 
+import random
 import time
-import random 
+import random
 import json
 import os
 pygame.init()
 
-background = pygame.image.load  //////    #importer de charger l'arriere plan 
-
 
 pygame.display.set_caption("idle farmer") #generer la fenetre de notre jeu
-pygame.display.set_mode((500,300))
+screen = pygame.display.set_mode((1000,720))
 
-running=True #la laissé éveiller 
+background = pygame.image.load('assets/bg.jpg')  #importer de charger l'arriere plan
+
+running=True #la laissé éveiller
+
 while running :
-  for event in pygame.event.get()
+  screen.blit(background,(0,-200)) #appliquer l'arrière plan de notre jeu
+  pygame.display.flip() #mettre a jour l'écran
+  for event in pygame.event.get():
     if event.type == pygame.QUIT :
-      running = False 
+      running = False
       pygame.quit()
-      print("fermeture du jeu")  
+      print("fermeture du jeu")
