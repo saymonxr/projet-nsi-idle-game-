@@ -5,3 +5,18 @@ import time
 import random 
 import json
 import os
+pygame.init()
+
+background = pygame.image.load  //////    #importer de charger l'arriere plan 
+
+
+pygame.display.set_caption("idle farmer") #generer la fenetre de notre jeu
+pygame.display.set_mode((500,300))
+
+running=True #la laissé éveiller 
+while running :
+  for event in pygame.event.get()
+    if event.type == pygame.QUIT :
+      running = False 
+      pygame.quit()
+      print("fermeture du jeu")  
