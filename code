@@ -1,23 +1,34 @@
 import pygame
 import time
 import random
-import time
 import random
 import json
 import os
 pygame.init()
 
-
+class Player(pygame.sprite.Sprite) :
+  def __init__(self,x,y):
+    super().__init__()
+    self.velocity = 5
+    self.image = pygame.image.load("assets 2/players.png")
+    self.rect = self.image.get_rect()
+    self.rect.x = x
+    self.rect.y = y
 pygame.display.set_caption("idle farmer") #generer la fenetre de notre jeu
-screen = pygame.display.set_mode((1000,720))
+screen = pygame.display.set_mode((1000,724))
 
-background = pygame.image.load('assets/bg.jpg')  #importer de charger l'arriere plan
+background = pygame.image.load('assets 2/bg.jpg')  #importer de charger l'arriere plan
+background = pygame.transform.scale(background, screen.get_size()) #mettre la photo au niveau de l'écran
+
+player = Player(100,100)
 
 running=True #la laissé éveiller
 
 while running :
-  screen.blit(background,(0,-200)) #appliquer l'arrière plan de notre jeu
+  screen.blit(background,(0,0)) #appliquer l'arrière plan de notre jeu
+  screen.blit(player.image , player.rect )
   pygame.display.flip() #mettre a jour l'écran
+
   for event in pygame.event.get():
     if event.type == pygame.QUIT :
       running = False
