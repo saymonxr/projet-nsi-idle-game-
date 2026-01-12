@@ -1,0 +1,30 @@
+import pygame
+
+class MoneyOverlay:
+    def __init__(self):
+        self.money = 0
+        self.rendement_par_seconde = 1  # TU CHANGES ICI FACILEMENT
+        self.font = pygame.font.Font(None, 32)
+
+    def update(self, dt):
+        self.money += self.rendement_par_seconde * dt    # argent qui arrive chaque seconde
+
+    def add_money(self, amount):
+        self.money += amount     # ajouter de l'argent (bonus, clic, récompense)
+
+    def spend_money(self, cost):
+        if self.money >= cost:    # dépenser de l'argent (acheter un item)
+            self.money -= cost
+            return True  # achat réussi
+        return False  # pas assez d'argent
+
+    def draw(self, screen):
+        text = self.font.render(
+            f"Argent : {int(self.money)} € (+{self.rendement_par_seconde}/s)",
+            True,
+            (255, 215, 0)
+        )
+        screen.blit(
+            text,
+            (screen.get_width() - text.get_width() - 20, 20)
+        )
