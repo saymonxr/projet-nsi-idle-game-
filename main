@@ -21,7 +21,7 @@ from arbre import Arbre
 
 
 arbres = [Arbre(500,400)]
-player = Player(100,100)
+player = Player(75,75)
 money_overlay = MoneyOverlay()
 
 
