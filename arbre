@@ -1,0 +1,23 @@
+import pygame
+import random
+
+class Arbre(pygame.sprite.Sprite):
+    compteur = 0         # pour nom unique
+    timer_famille = 0    # timer partagé pour tous les arbres
+
+    def __init__(self, x, y):
+        super().__init__()
+        original_image = pygame.image.load("assets 2/arbre.png").convert_alpha()
+        self.image = pygame.transform.scale(original_image, (100, 100))
+        self.rect = self.image.get_rect(center=(x, y))
+        Arbre.compteur += 1
+        self.nom = f"zaegaueg-arbre{Arbre.compteur}"
+
+    @classmethod
+    def update_famille(cls, dt, liste_arbres):
+        cls.timer_famille += dt
+        if cls.timer_famille >= 10:
+            x = random.randint(50, 950)
+            y = random.randint(50, 674)
+            liste_arbres.append(Arbre(x, y))
+            cls.timer_famille = 0
