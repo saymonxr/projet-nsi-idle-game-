@@ -1,0 +1,21 @@
+import pygame
+
+class Player(pygame.sprite.Sprite):
+  def __init__(self, x, y):
+    super().__init__()
+    self.speed = 5
+
+    original_image = pygame.image.load("assets 2/players.png").convert_alpha()
+    self.image = pygame.transform.scale(original_image, (100, 100))
+    self.rect = self.image.get_rect(center=(x, y))
+
+  def move_towards(self, target_pos):
+    dx = target_pos[0] - self.rect.centerx
+    dy = target_pos[1] - self.rect.centery
+
+    distance = (dx ** 2 + dy ** 2) ** 0.5
+    if distance > 5:  # évite les tremblements
+      dx /= distance
+      dy /= distance
+      self.rect.x += dx * self.speed
+      self.rect.y += dy * self.speed
