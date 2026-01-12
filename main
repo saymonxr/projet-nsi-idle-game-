@@ -8,7 +8,7 @@ pygame.init()
 pygame.display.set_caption("idle farmer") #generer la fenetre de notre jeu
 screen = pygame.display.set_mode((1000,724))
 
-background = pygame.image.load('assets 2/bg.jpg')  #importer de charger l'arriere plan
+background = pygame.image.load('assets2/bg.jpg')  #importer de charger l'arriere plan
 background = pygame.transform.scale(background, screen.get_size()) #mettre la photo au niveau de l'écran
 
 
