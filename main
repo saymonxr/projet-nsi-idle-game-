@@ -1,0 +1,62 @@
+import pygame
+import time
+import random
+import json
+import os
+pygame.init()
+
+pygame.display.set_caption("idle farmer") #generer la fenetre de notre jeu
+screen = pygame.display.set_mode((1000,724))
+
+background = pygame.image.load('assets 2/bg.jpg')  #importer de charger l'arriere plan
+background = pygame.transform.scale(background, screen.get_size()) #mettre la photo au niveau de l'écran
+
+
+#importer dans la boucle main
+from farmer import Player
+from money_overlay import MoneyOverlay
+from arbre import Arbre
+
+
+
+
+arbres = [Arbre(500,400)]
+player = Player(100,100)
+money_overlay = MoneyOverlay()
+
+
+running=True #la laissé éveiller
+clock = pygame.time.Clock()
+
+
+while running:
+    dt = clock.tick(60) / 1000  # récupération du temps (dt) + fps
+    screen.blit(background, (0, 0))  # appliquer l'arrière plan
+
+    # mettre à jour tous les arbres
+    for arbre in arbres:
+        arbre.update(dt)
+    Arbre.update_famille(dt, arbres)
+
+    # afficher tous les arbres
+    for arbre in arbres:
+        screen.blit(arbre.image, arbre.rect)
+
+    # déplacement du joueur
+    mouse_buttons = pygame.mouse.get_pressed()
+    if mouse_buttons[0]:
+        mouse_pos = pygame.mouse.get_pos()
+        player.move_towards(mouse_pos)
+
+    # argent
+    money_overlay.update(dt)
+    money_overlay.draw(screen)
+    screen.blit(player.image, player.rect)
+
+    pygame.display.flip()
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+            pygame.quit()
+            print("fermeture du jeu")
