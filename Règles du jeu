@@ -1,8 +1,8 @@
 1) on incarne un fermier, le jeu est du style idle miner, l'objectif final est d'avoir une ferme capable de produire de la nouriture dans tout le pays.
 2) au départ il faut couper du bois afin de construire un abris. le bois peut construire des champs, des outils et des batiments.
 +1 bois par arbre bucheron coupe les arbres automatiquement après.
-3) la nouriture sert a gagner de l'argent, plusieurs types de nouriture : poules blé vaches lait 
-on l'obtient avec des champs ou des élevages qui sont directement automatisés
+3) la nouriture sert a gagner de l'argent, plusieurs types de nouriture : poules blé vaches lait oeufs
+on l'obtient avec des champs ou des élevages qui sont directement automatisés(on doit quand même les ramasser)
 4) les améliorations permettent d'augmenter la production automatique d'une nouriture ou autre de 100%
 on les obtient avec de l'argent et ça doit couter cher si on veut faire le jeu durer
 5) le prix de la nouriture varie, (un indicateur sera présent) afin d'ajouter de l'interaction et de pouvoir optimiser son gain.
