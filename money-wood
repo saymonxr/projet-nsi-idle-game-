@@ -10,6 +10,6 @@ class MoneyWood:
         pass  # plus besoin de toucher à l'arbre ici
 
     def draw(self, screen):
-        text = self.font.render(f"wood : {int(self.money)} wood", True, (255, 215, 0))
+        text = self.font.render(f"wood : {int(self.money)} ", True, (255, 215, 0))
         screen.blit(text, (screen.get_width() - text.get_width() - 20, 40))
 
