@@ -6,7 +6,8 @@ on l'obtient avec des champs ou des élevages qui sont directement automatisés(
 4) les améliorations permettent d'augmenter la production automatique d'une nouriture ou autre de 100%
 on les obtient avec de l'argent et ça doit couter cher si on veut faire le jeu durer
 5) le prix de la nouriture varie, (un indicateur sera présent) afin d'ajouter de l'interaction et de pouvoir optimiser son gain.
-6) quand la production de nouriture par seconde est arrivée a un certain seuil, le jeu est fini.
+6) des évènements diverse peuvent modifier les récoltes comme la sécheresse etc...
+7) quand la production de nouriture par seconde est arrivée a un certain seuil, le jeu est fini.
 
 
 
