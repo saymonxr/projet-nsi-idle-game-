@@ -1,56 +1,78 @@
 import pygame
 import time
-import random
-import json
-import os
 pygame.init()
 
-pygame.display.set_caption("idle farmer") #generer la fenetre de notre jeu
-screen = pygame.display.set_mode((1000,724))
+pygame.display.set_caption("idle farmer")
+screen = pygame.display.set_mode((1920, 1080))
 
-background = pygame.image.load('assets2/bg.jpg')  #importer de charger l'arriere plan
-background = pygame.transform.scale(background, screen.get_size()) #mettre la photo au niveau de l'écran
+background = pygame.image.load('bg.jpg')
+background = pygame.transform.scale(background, screen.get_size())
 
-
-#importer dans la boucle main
 from farmer import Player
 from money_overlay import MoneyOverlay
 from arbre import Arbre
+from money_wood import MoneyWood
 
+# groupes
+arbre_group = pygame.sprite.Group()
+arbre = Arbre(500,400)
+arbre_group.add(arbre)
 
-
-
-arbres = [Arbre(500,400)]
-player = Player(75,75)
+player = Player(45, 45)
 money_overlay = MoneyOverlay()
+money_wood = MoneyWood()
 
+# Timer pour les dégâts
+last_attack_time = 0
+attack_cooldown = 0.1  # 0,5 seconde entre les dégâts
 
-running=True #la laissé éveiller
+running = True
 clock = pygame.time.Clock()
 
-
 while running:
-    dt = clock.tick(60) / 1000  # récupération du temps (dt) + fps
-    screen.blit(background, (0, 0))  # appliquer l'arrière plan
+    dt = clock.tick(60) / 1000
+    screen.blit(background, (0, 0))
 
-    # mettre à jour tous les arbres
-    for arbre in arbres:
-        arbre.update(dt)
-    Arbre.update_famille(dt, arbres)
+    # temps actuel
+    current_time = time.time()
 
-    # afficher tous les arbres
-    for arbre in arbres:
+    # mise à jour des arbres
+    Arbre.update_famille(dt, arbre_group)
+    for arbre in arbre_group:
         screen.blit(arbre.image, arbre.rect)
+        arbre.draw_health_bar(screen)
 
-    # déplacement du joueur
+    # récupérer l'état des boutons et position de la souris
     mouse_buttons = pygame.mouse.get_pressed()
-    if mouse_buttons[0]:
-        mouse_pos = pygame.mouse.get_pos()
+    mouse_pos = pygame.mouse.get_pos()
+
+    if mouse_buttons[0]:# clic gauche maintenu
+        old_pos = player.rect.topleft
         player.move_towards(mouse_pos)
+        player.rotate_towards(mouse_pos)
+
+        # empêcher le joueur de traverser les arbres
+        if pygame.sprite.spritecollide(player, arbre_group, False, pygame.sprite.collide_mask):
+            player.rect.topleft = old_pos
+
+        # appliquer les dégâts avec cooldown
+        if current_time - last_attack_time >= attack_cooldown:
+            for arbre in arbre_group:
+                if player.rect.colliderect(arbre.rect):
+                    arbre_dead = arbre.take_damage()  # retourne True si tué
+                    if arbre_dead:
+                        money_wood.money += money_wood.rendement_par_coup  # argent gagné uniquement si arbre tué
+            last_attack_time = current_time
+
 
     # argent
     money_overlay.update(dt)
     money_overlay.draw(screen)
+    money_wood.draw(screen)
+
+    
+
+    # afficher joueur
     screen.blit(player.image, player.rect)
 
     pygame.display.flip()
@@ -60,3 +82,4 @@ while running:
             running = False
             pygame.quit()
             print("fermeture du jeu")
+
