@@ -7,17 +7,47 @@ class Arbre(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         super().__init__()
-        original_image = pygame.image.load('assets2/arbre.png').convert_alpha()
+        # Choix aléatoire de l'image
+        image_name = random.choice(['arbre/arbre1.png', 'arbre/arbre2.png','arbre/arbre3.png','arbre/arbre4.png'])
+        original_image = pygame.image.load(image_name).convert_alpha()
         self.image = pygame.transform.scale(original_image, (100, 100))
         self.rect = self.image.get_rect(center=(x, y))
+        self.vie = 50
         Arbre.compteur += 1
-        self.nom = f"zaegaueg-arbre{Arbre.compteur}"
+        self.mask = pygame.mask.from_surface(self.image)
+    
+    
+    
+    def take_damage(self, amount=1.5):
+        """Retourne True si l'arbre est tué"""
+        self.vie -= amount
+        if self.vie <= 0:
+            self.kill()
+            return True   # signaler que l'arbre est mort
+        return False  
+            
 
     @classmethod
-    def update_famille(cls, dt, liste_arbres):
+    def update_famille(cls, dt, groupe_arbres):
         cls.timer_famille += dt
         if cls.timer_famille >= 10:
-            x = random.randint(50, 950)
-            y = random.randint(50, 674)
-            liste_arbres.append(Arbre(x, y))
+            x = random.randint(50, 1900)
+            y = random.randint(50, 1060)
+            groupe_arbres.add(Arbre(x, y))
             cls.timer_famille = 0
+    
+    def draw_health_bar(self, surface):
+        # Taille de la barre
+        bar_width = 10
+        bar_height = 3
+        # Calcul proportionnel de la vie
+        fill = (self.vie / 5) * bar_width  # 5 = vie max
+        # Position de la barre au-dessus de l'arbre
+        bar_x = self.rect.centerx - bar_width // 2-45
+        bar_y = self.rect.top -0
+        
+        # Barre de fond (rouge)
+        pygame.draw.rect(surface, (255, 0, 0), (bar_x, bar_y, bar_width, bar_height))
+        # Barre de vie (vert)
+        pygame.draw.rect(surface, (0, 255, 0), (bar_x, bar_y, fill, bar_height))
+
