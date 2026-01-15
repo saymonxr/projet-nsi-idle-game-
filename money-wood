@@ -1,0 +1,15 @@
+import pygame
+
+class MoneyWood:
+    def __init__(self):
+        self.money = 0
+        self.font = pygame.font.Font(None, 32)
+        self.rendement_par_coup = 1  # argent gagné par arbre tué
+
+    def update(self):
+        pass  # plus besoin de toucher à l'arbre ici
+
+    def draw(self, screen):
+        text = self.font.render(f"wood : {int(self.money)} wood", True, (255, 215, 0))
+        screen.blit(text, (screen.get_width() - text.get_width() - 20, 40))
+
