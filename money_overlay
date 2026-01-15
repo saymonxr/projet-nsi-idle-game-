@@ -3,7 +3,7 @@ import pygame
 class MoneyOverlay:
     def __init__(self):
         self.money = 0
-        self.rendement_par_seconde = 1  # TU CHANGES ICI FACILEMENT
+        self.rendement_par_seconde = 0  # TU CHANGES ICI FACILEMENT
         self.font = pygame.font.Font(None, 32)
 
     def update(self, dt):
