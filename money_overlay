@@ -1,4 +1,3 @@
-
 import pygame
 
 class MoneyOverlay:
@@ -29,4 +28,5 @@ class MoneyOverlay:
             text,
             (screen.get_width() - text.get_width() - 20, 20)
         )
-
+        
+        
